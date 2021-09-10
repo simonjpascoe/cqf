@@ -200,7 +200,7 @@ namespace Common {
 		 double y, z;
 
 		 if (_isnan(u))
-		  return _Nan._Double;
+			 return std::numeric_limits<double>::quiet_NaN();
 		 if (!_finite(u))
 		  return (u < 0 ? 0.0 : 1.0);
 		 y = fabs(u);
@@ -258,11 +258,11 @@ namespace Common {
 		 double q, t, u;
 
 		 if (_isnan(p) || p > 1.0 || p < 0.0)
-		  return _Nan._Double;
+		  return std::numeric_limits<double>::quiet_NaN();
 		 if (p == 0.0)
-		  return -_Inf._Double;
+		  return -std::numeric_limits<double>::infinity();
 		 if (p == 1.0)
-		  return  _Inf._Double;
+		  return  std::numeric_limits<double>::infinity();
 		 q = min(p,1-p);
 		 if (q > 0.02425) {
 		  /* Rational approximation for central region. */

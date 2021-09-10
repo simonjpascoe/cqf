@@ -8,6 +8,7 @@
     <ClCompile Include="ExcelHelpers.cpp" />
     <ClCompile Include="Instruments.cpp" />
     <ClCompile Include="Analytics.cpp" />
+    <ClCompile Include="source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectCache.h" />
@@ -17,5 +18,9 @@
     <ClInclude Include="XDictionary.h" />
     <ClInclude Include="KeyStore.h" />
     <ClInclude Include="Portfolio.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="xlwInterfaceDef.props" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
