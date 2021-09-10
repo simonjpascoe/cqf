@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\HJM">
+      <UniqueIdentifier>{8f5875df-0012-45c0-938a-3f6f382ebb2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FD">
+      <UniqueIdentifier>{dc40121e-ee23-4e9a-ba36-e62bbc6e97b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{5500d20b-dad6-45ab-94fa-73e661d89600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HJM">
+      <UniqueIdentifier>{800ce00f-df59-40e5-8b63-d86f8f789f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FD">
+      <UniqueIdentifier>{d307aba0-7d6a-4123-a42e-0e7eb22241ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{ae976066-3714-4c94-9156-0aec17f1792f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Instruments">
+      <UniqueIdentifier>{ea67d89b-b0a0-4467-819a-093bdaee941a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Instruments">
+      <UniqueIdentifier>{67292cf9-53b1-438f-8b29-6d8aa3e74244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Analytic">
+      <UniqueIdentifier>{5f9bd13c-8593-49ae-8eaa-a0fa39da5d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Analytic">
+      <UniqueIdentifier>{bcbae6db-dd2c-4491-a0a9-fc0add120780}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Sobol.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Mathematics.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="HeathJarrowMortonPricer.h">
+      <Filter>Header Files\HJM</Filter>
+    </ClInclude>
+    <ClInclude Include="HeathJarrowMortonPriceable.h">
+      <Filter>Header Files\HJM</Filter>
+    </ClInclude>
+    <ClInclude Include="Cap.h">
+      <Filter>Header Files\Instruments</Filter>
+    </ClInclude>
+    <ClInclude Include="ZeroCouponBond.h">
+      <Filter>Header Files\Instruments</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruments.h">
+      <Filter>Header Files\Instruments</Filter>
+    </ClInclude>
+    <ClInclude Include="VanillaOption.h">
+      <Filter>Header Files\Instruments</Filter>
+    </ClInclude>
+    <ClInclude Include="FiniteDifferencePriceable.h">
+      <Filter>Header Files\FD</Filter>
+    </ClInclude>
+    <ClInclude Include="FiniteDifferencePricer.h">
+      <Filter>Header Files\FD</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugging.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="AnalyticsPriceable.h">
+      <Filter>Header Files\Analytic</Filter>
+    </ClInclude>
+    <ClInclude Include="Financials.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Analytics.h">
+      <Filter>Header Files\Analytic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Sobol.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="HeathJarrowMortonPricer.cpp">
+      <Filter>Source Files\HJM</Filter>
+    </ClCompile>
+    <ClCompile Include="Cap.cpp">
+      <Filter>Source Files\Instruments</Filter>
+    </ClCompile>
+    <ClCompile Include="ZeroCouponBond.cpp">
+      <Filter>Source Files\Instruments</Filter>
+    </ClCompile>
+    <ClCompile Include="VanillaOption.cpp">
+      <Filter>Source Files\Instruments</Filter>
+    </ClCompile>
+    <ClCompile Include="FiniteDifferencePricer.cpp">
+      <Filter>Source Files\FD</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathematics.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugging.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Analytics.cpp">
+      <Filter>Source Files\Analytic</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

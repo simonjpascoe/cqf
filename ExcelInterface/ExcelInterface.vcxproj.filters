@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="FiniteDifference.cpp" />
+    <ClCompile Include="HeathJarrowMorton.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="ObjectOwner.cpp" />
+    <ClCompile Include="ExcelHelpers.cpp" />
+    <ClCompile Include="Instruments.cpp" />
+    <ClCompile Include="Analytics.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ObjectCache.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="ObjectOwner.h" />
+    <ClInclude Include="ExcelHelpers.h" />
+    <ClInclude Include="XDictionary.h" />
+    <ClInclude Include="KeyStore.h" />
+    <ClInclude Include="Portfolio.h" />
+  </ItemGroup>
+</Project>
