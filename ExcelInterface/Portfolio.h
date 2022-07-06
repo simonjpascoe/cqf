@@ -13,24 +13,24 @@ namespace Common {
 class Portfolio 
 {
 public:
-	virtual ~Portfolio()
-	{
-		_values.empty();
-	}
+    virtual ~Portfolio()
+    {
+        _values.empty();
+    }
 
-	const vector<pair<string,double>>& Values() const
-	{
-		return _values;
-	}
+    const vector<pair<string,double>>& Values() const
+    {
+        return _values;
+    }
 
-	void Add(const string instrument, const double quantity)
-	{
+    void Add(const string instrument, const double quantity)
+    {
 
-		_values.push_back(make_pair(instrument, quantity));
-	}
+        _values.push_back(make_pair(instrument, quantity));
+    }
 
 private:
-	vector<pair<string,double>> _values;
+    vector<pair<string,double>> _values;
 
 };
 

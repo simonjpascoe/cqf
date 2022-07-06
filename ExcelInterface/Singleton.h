@@ -4,15 +4,15 @@ template<typename T>
 class Singleton
 {
 public:
-	static T& Instance()
-	{
-		static T object;
-		return object;
-	}
-	virtual ~Singleton() { }
+    static T& Instance()
+    {
+        static T object;
+        return object;
+    }
+    virtual ~Singleton() { }
 protected:
-	Singleton() { }
+    Singleton() { }
 private:
-	Singleton(const Singleton& other);
-	Singleton& operator=(const Singleton& other);
+    Singleton(const Singleton& other);
+    Singleton& operator=(const Singleton& other);
 };

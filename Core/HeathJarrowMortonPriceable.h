@@ -7,10 +7,10 @@ namespace HJM {
 class HeathJarrowMortonPriceable
 {
 public:
-	HeathJarrowMortonPriceable(void) {}
-	virtual ~HeathJarrowMortonPriceable(void) {}
+    HeathJarrowMortonPriceable(void) {}
+    virtual ~HeathJarrowMortonPriceable(void) {}
 
-	virtual double HeathJarrowMortonEvaluate(double dt, const Matrix& simulation, const Matrix& tenors) const = 0;
+    virtual double HeathJarrowMortonEvaluate(double dt, const Matrix& simulation, const Matrix& tenors) const = 0;
 };
 }
 

@@ -9,11 +9,11 @@ namespace Instruments {
 class ZeroCouponBond : public Instrument, public HeathJarrowMortonPriceable
 {
 public:
-	ZeroCouponBond(double maturity);
-	virtual ~ZeroCouponBond(void) {
-	}
+    ZeroCouponBond(double maturity);
+    virtual ~ZeroCouponBond(void) {
+    }
 
-	virtual double HeathJarrowMortonEvaluate(double dt, const Matrix& simulation, const Matrix& tenors) const;
+    virtual double HeathJarrowMortonEvaluate(double dt, const Matrix& simulation, const Matrix& tenors) const;
 
 };
 

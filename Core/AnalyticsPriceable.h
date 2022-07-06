@@ -8,10 +8,10 @@ namespace Analytic {
 class AnalyticsPriceable
 {
 public:
-	AnalyticsPriceable(void) {}
-	virtual ~AnalyticsPriceable(void) {}
+    AnalyticsPriceable(void) {}
+    virtual ~AnalyticsPriceable(void) {}
 
-	virtual pair<double,double> AnalyticsEvaluate(const MarketData& marketData) const = 0;
+    virtual pair<double,double> AnalyticsEvaluate(const MarketData& marketData) const = 0;
 };
 }
 

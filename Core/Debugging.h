@@ -14,6 +14,6 @@
 using namespace std;
 
 namespace Common {
-	void odprintf(string format, ...);
-	string vector_to_string(vector<double> &doubles);
+    void odprintf(string format, ...);
+    string vector_to_string(vector<double> &doubles);
 }
