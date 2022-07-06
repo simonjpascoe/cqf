@@ -89,7 +89,7 @@ public:
         const Quotes<FiniteDifferencePriceable*>& hedgeInstruments,
         const vector<double>& hedgeWeights) const;
 
-    const vector<double> FiniteDifferencePricer::CalculateSpaceVector(
+    const vector<double> CalculateSpaceVector(
         const double maturity,
         const MarketData& marketData,
         const FiniteDifferenceParameters& parameters) const;

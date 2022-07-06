@@ -18,7 +18,7 @@ double ZeroCouponBond::HeathJarrowMortonEvaluate(double dt, const Matrix& simula
     }
 
     double value = 0;
-    for (auto i=0; i<finalRow; i++)
+    for (size_t i=0; i<finalRow; i++)
     {
         value += simulation(i,0);
     }

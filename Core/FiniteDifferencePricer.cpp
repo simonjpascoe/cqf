@@ -78,7 +78,7 @@ FiniteDifferenceSolution FiniteDifferencePricer::EvaluateHedge(
     auto package = exotic;
     auto hedges = hedgeInstruments.All();
 
-    for (auto i = 0; i < hedges.size(); i++) {
+    for (size_t i = 0; i < hedges.size(); i++) {
         package.push_back(make_pair(hedges[i].Instrument, hedgeWeights[i]));
     }
 
@@ -93,7 +93,7 @@ FiniteDifferenceSolution FiniteDifferencePricer::EvaluateHedge(
 
     // 3. Calculate the cost(/gain) of the hedge
     auto hedge =  0.0;
-    for (auto i = 0; i < hedges.size(); i++) {
+    for (size_t i = 0; i < hedges.size(); i++) {
         hedge += hedges[i].Bid * hedgeWeights[i];
     }
     Matrix hedgeM(result.size(), 1);
@@ -108,7 +108,7 @@ FiniteDifferenceSolution FiniteDifferencePricer::EvaluateHedge(
     {
         if (fdp.first->Maturity() == maturity)
         {
-            for (auto i=0; i<maturityExoticPayoff.size(); i++)
+            for (size_t i=0; i<maturityExoticPayoff.size(); i++)
             {
                 maturityExoticPayoff[i] += fdp.first->Payoff(space[i]) * fdp.second;
             }
@@ -120,7 +120,7 @@ FiniteDifferenceSolution FiniteDifferencePricer::EvaluateHedge(
     {
         if (fdp.first->Maturity() == maturity)
         {
-            for (auto i=0; i<residualMaturityPayoff.size(); i++)
+            for (size_t i=0; i<residualMaturityPayoff.size(); i++)
             {
                 residualMaturityPayoff[i] += fdp.first->Payoff(space[i]) * fdp.second;
             }
@@ -216,8 +216,8 @@ vector<double> FiniteDifferencePricer::Kernel(
 
     // 4. Rollback the pde solver. The entire solution is not kept in memory; only the timestep just solved. These
     // two vectors are then swapped to provide a good use of memory.
-    auto_ptr<vector<double>> current(new vector<double>(parameters.SpaceSteps+1,0.0));
-    auto_ptr<vector<double>> future(new vector<double>(parameters.SpaceSteps+1,0.0));
+    unique_ptr<vector<double>> current(new vector<double>(parameters.SpaceSteps+1,0.0));
+    unique_ptr<vector<double>> future(new vector<double>(parameters.SpaceSteps+1,0.0));
     
     // handle the possibly non-zero low bound for S.
     auto shift = space[0] / spaceStep;
@@ -308,7 +308,7 @@ vector<double> FiniteDifferencePricer::RichardsonKernel(
 
     // 3. Interpolate the larger grid solution back to the smaller grid space vector
     // and merge the results to form the final solution
-    for (auto i = 0; i<solution.size(); i++)
+    for (size_t i = 0; i<solution.size(); i++)
     {
         auto v1 = solution[i];
         auto v2 = interpolate(space[i], space2, solution2);
@@ -350,8 +350,8 @@ vector<double> FiniteDifferencePricer::KernelImplicit(
     // 4. Rollback the pde solver. The entire solution is not kept in memory; only the timestep just solved. These
     // two vectors are then swapped to provide a good use of memory.
     auto M = Matrix::Identity(parameters.SpaceSteps+1);
-    auto_ptr<Matrix> current(new Matrix(parameters.SpaceSteps+1,1));
-    auto_ptr<Matrix> future(new Matrix(parameters.SpaceSteps+1,1));
+    unique_ptr<Matrix> current(new Matrix(parameters.SpaceSteps+1,1));
+    unique_ptr<Matrix> future(new Matrix(parameters.SpaceSteps+1,1));
 
     // handle the possibly non-zero low bound for S.
     auto shift = space[0] / spaceStep;
@@ -384,7 +384,7 @@ vector<double> FiniteDifferencePricer::KernelImplicit(
         M(parameters.SpaceSteps,parameters.SpaceSteps-1) = -1.0;
 
         // non - boundary conditions
-        for (auto j=1; j<parameters.SpaceSteps; j++)
+        for (auto j=1u; j<parameters.SpaceSteps; j++)
         {
             auto J = shift*vol*vol * (2*j + shift);
             auto a = 0.5 * timeStep * (marketData.InterestRate * j - vol*vol * j * j + marketData.InterestRate * shift - J);
@@ -464,7 +464,7 @@ vector<pair<FiniteDifferencePriceable*, double>> FiniteDifferencePricer::invertP
         const vector<pair<FiniteDifferencePriceable*, double>>& instruments) const
 {
     auto flip = instruments;
-    for (auto i = 0; i<flip.size(); i++)
+    for (size_t i = 0; i<flip.size(); i++)
     {
         flip[i].second *= -1;
     }

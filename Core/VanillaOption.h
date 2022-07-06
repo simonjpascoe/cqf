@@ -9,14 +9,14 @@ using namespace Analytic;
 
 namespace Enums
 {
-enum OptionType
-{
-    Call,
-    Put,
-    BinaryCall,
-    BinaryPut,
-    Forward
-};
+    enum class OptionType
+    {
+        Call,
+        Put,
+        BinaryCall,
+        BinaryPut,
+        Forward
+    };
 }
 
 namespace Instruments {

@@ -15,6 +15,7 @@ using namespace xlw;
 using namespace std;
 
 using namespace Analytic;
+using namespace Enums;
 using namespace Financials;
 using namespace Common;
 using namespace Instruments;
@@ -62,11 +63,11 @@ extern "C" {
 
         auto type  = string(XlfOper(iType).AsString());
         Enums::OptionType ty;
-        if (type == "Call") {ty = Enums::Call; }
-        else if (type == "Put") {ty = Enums::Put;}
-        else if (type == "BinaryCall") { ty = Enums::BinaryCall; }
-        else if (type == "BinaryPut") { ty = Enums::BinaryPut;}
-        else if (type == "Forward") { ty = Enums::Forward;}
+        if (type == "Call") {ty = OptionType::Call; }
+        else if (type == "Put") {ty = OptionType::Put;}
+        else if (type == "BinaryCall") { ty = OptionType::BinaryCall; }
+        else if (type == "BinaryPut") { ty = OptionType::BinaryPut;}
+        else if (type == "Forward") { ty = OptionType::Forward;}
         else THROW_XLW("Unrecognised option type");
 
         VanillaOption option(XlfOper(iMaturity).AsDouble(), XlfOper(iStrike).AsDouble(), ty);

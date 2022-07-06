@@ -204,7 +204,7 @@ extern "C" {
             { THROW_XLW("Columns must be three"); }
 
         Quotes<string> quotes;
-        for (auto i = 0; i<cells.RowsInStructure(); i++) 
+        for (size_t i = 0; i<cells.RowsInStructure(); i++)
         {
             Quote<string> quote;
             quote.Instrument = cells(i,0).StringValue();

@@ -4,6 +4,7 @@
 #include "Mathematics.h"
 
 using namespace Common;
+using namespace Enums;
 
 namespace Instruments {
 
@@ -16,11 +17,11 @@ double VanillaOption::Payoff(double spot) const
 {
     switch (_optionType)
     {
-        case Enums::Call: return max(0.0, spot - _strike);
-        case Enums::Put: return max(0.0, _strike - spot);
-        case Enums::BinaryCall: return (spot >= _strike ? 1.0 : 0.0);
-        case Enums::BinaryPut: return (spot <= _strike ? 1.0 : 0.0);
-        case Enums::Forward: return spot - _strike;
+        case OptionType::Call: return max(0.0, spot - _strike);
+        case OptionType::Put: return max(0.0, _strike - spot);
+        case OptionType::BinaryCall: return (spot >= _strike ? 1.0 : 0.0);
+        case OptionType::BinaryPut: return (spot <= _strike ? 1.0 : 0.0);
+        case OptionType::Forward: return spot - _strike;
     }
 
     throw exception("Unsupported option type");
@@ -30,27 +31,27 @@ pair<double, double> VanillaOption::AnalyticsEvaluate(const MarketData& marketDa
 {
     switch (_optionType)
     {
-        case Enums::Call: { 
+        case OptionType::Call: { 
             auto low = call(marketData.Spot, marketData.LowVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             auto high = call(marketData.Spot, marketData.HighVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             return make_pair(low,high);
             };
-        case Enums::Put: { 
+        case OptionType::Put: {
             auto low = put(marketData.Spot, marketData.LowVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             auto high = put(marketData.Spot, marketData.HighVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             return make_pair(low,high);
             };
-        case Enums::BinaryCall: {
+        case OptionType::BinaryCall: {
             auto low = binaryCall(marketData.Spot, marketData.LowVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             auto high = binaryCall(marketData.Spot, marketData.HighVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             return make_pair(low,high);
         };
-        case Enums::BinaryPut: {
+        case OptionType::BinaryPut: {
             auto low = binaryPut(marketData.Spot, marketData.LowVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             auto high = binaryPut(marketData.Spot, marketData.HighVolatility, marketData.InterestRate, Instrument::_maturity, _strike);
             return make_pair(low,high);
         };
-        case Enums::Forward: {
+        case OptionType::Forward: {
             // no volatility dependence, so it's the same either way
             auto fwd = forward(marketData.Spot, marketData.InterestRate, Instrument::_maturity, _strike);
             return make_pair(fwd, fwd);

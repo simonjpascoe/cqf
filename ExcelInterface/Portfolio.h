@@ -15,7 +15,7 @@ class Portfolio
 public:
     virtual ~Portfolio()
     {
-        _values.empty();
+        _values.clear();
     }
 
     const vector<pair<string,double>>& Values() const

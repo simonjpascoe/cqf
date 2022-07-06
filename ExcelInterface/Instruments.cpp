@@ -16,6 +16,7 @@
 
 using namespace xlw;
 using namespace std;
+using namespace Enums;
 using namespace Instruments;
 
 
@@ -34,29 +35,29 @@ extern "C" {
         auto xMaturity = dict.Lookup("maturity").NumericValue();
 
         switch (xProduct) {
-        case Enums::ZeroCouponBond: 
+        case InstrumentType::ZeroCouponBond:
             {
                 shared_ptr<Instrument> zcb(new ZeroCouponBond(xMaturity));
                 key = cache_item(zcb,"Instrument");
                 break;
             }
-        case Enums::Cap: 
+        case InstrumentType::Cap:
             {
                 auto xStrike = dict.Lookup("strike").NumericValue();
                 shared_ptr<Instrument> zcb(new Cap(xMaturity,xStrike));
                 key = cache_item(zcb,"Instrument");
                 break;
             }    
-        case Enums::VanillaOption:
+        case InstrumentType::VanillaOption:
             {
                 auto xStrike = dict.Lookup("strike").NumericValue();
                 auto xType = dict.Lookup("type").StringValue();
-                Enums::OptionType ty;
-                if (xType == "Call") {ty = Enums::Call; }
-                else if (xType == "Put") {ty = Enums::Put;}
-                else if (xType == "BinaryCall") { ty = Enums::BinaryCall; }
-                else if (xType == "BinaryPut") { ty = Enums::BinaryPut;}
-                else if (xType == "Forward") { ty = Enums::Forward;}
+                OptionType ty;
+                if (xType == "Call") {ty = OptionType::Call; }
+                else if (xType == "Put") {ty = OptionType::Put;}
+                else if (xType == "BinaryCall") { ty = OptionType::BinaryCall; }
+                else if (xType == "BinaryPut") { ty = OptionType::BinaryPut;}
+                else if (xType == "Forward") { ty = OptionType::Forward;}
                 else THROW_XLW("Unrecognised option type");
                 shared_ptr<Instrument> option(new VanillaOption(xMaturity, xStrike, ty));
                 key = cache_item(option,"Instrument");
@@ -78,7 +79,7 @@ extern "C" {
         auto cells = xSource.AsCellMatrix();
 
         Portfolio portfolio;
-        for (auto j = 0; j<cells.RowsInStructure(); j++)
+        for (size_t j = 0; j<cells.RowsInStructure(); j++)
         {
             portfolio.Add(cells(j,0).StringValue(), cells(j,1).NumericValue());
         }

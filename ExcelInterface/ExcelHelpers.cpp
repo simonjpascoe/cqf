@@ -69,9 +69,9 @@ extern "C" {
             { THROW_XLW("At least one dimension for key store should 1"); }
 
         KeyStore store;
-        for (auto i = 0; i<cells.RowsInStructure(); i++) 
+        for (size_t i = 0; i<cells.RowsInStructure(); i++) 
         {
-            for (auto j = 0; j<cells.ColumnsInStructure(); j++)
+            for (size_t j = 0; j<cells.ColumnsInStructure(); j++)
             {
                 store.Add(cells(i,j).StringValue());
             }

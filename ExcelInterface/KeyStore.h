@@ -15,7 +15,7 @@ class KeyStore
 public:
     virtual ~KeyStore()
     {
-        m_keys.empty();
+        m_keys.clear();
     }
 
     const vector<string>& Values() const

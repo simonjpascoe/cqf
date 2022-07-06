@@ -42,7 +42,7 @@ Matrix Matrix::Unit(double v)
 Matrix Matrix::Identity(size_t size)
 {
     Matrix m(size,size);
-    for (auto i=0; i<size; i++) { m(i,i) = 1.0; }
+    for (size_t i=0; i<size; i++) { m(i,i) = 1.0; }
     return m;
 }
 
@@ -51,13 +51,13 @@ Matrix Matrix::FromVector(const vector<double>& source, bool vertical)
     if (vertical) 
     {
         Matrix m(source.size(), 1);
-        for (auto i=0; i<m.Rows(); i++) { m(i,0) = source[i]; }
+        for (size_t i=0; i<m.Rows(); i++) { m(i,0) = source[i]; }
         return m;
     }
     else
     {
         Matrix m(1, source.size());
-        for (auto i=0; i<m.Cols(); i++) { m(0,i) = source[i]; }
+        for (size_t i=0; i<m.Cols(); i++) { m(0,i) = source[i]; }
         return m;
     }
 }
@@ -67,13 +67,13 @@ vector<double> Matrix::ToVector(size_t index, bool vertical) const
     if (vertical) 
     {
         vector<double> v(_rows);
-        for (auto i=0; i<_rows; i++) { v[i] = (*this)(i,index); }
+        for (size_t i=0; i<_rows; i++) { v[i] = (*this)(i,index); }
         return v;
     }
     else 
     {
         vector<double> v(_cols);
-        for (auto i=0; i<_cols; i++) { v[i] = (*this)(index,i); }
+        for (size_t i=0; i<_cols; i++) { v[i] = (*this)(index,i); }
         return v;
     }
 }
@@ -94,8 +94,8 @@ const Matrix operator+(const Matrix& lhs, const Matrix& rhs)
     if ((lhs._rows != rhs._rows) || (lhs._cols != rhs._cols)) {throw domain_error("Matrix dimensions do not agree");}
     
     Matrix R(lhs._rows, lhs._cols);
-    for (auto i=0; i<lhs._rows; i++) {
-        for (auto j=0; j<lhs._cols; j++) {
+    for (size_t i=0; i<lhs._rows; i++) {
+        for (size_t j=0; j<lhs._cols; j++) {
             R(i,j) = lhs(i,j) + rhs(i,j);
         }
     }
@@ -107,8 +107,8 @@ const Matrix operator-(const Matrix& lhs, const Matrix& rhs)
     if ((lhs._rows != rhs._rows) || (lhs._cols != rhs._cols)) {throw domain_error("Matrix dimensions do not agree");}
     
     Matrix R(lhs._rows, lhs._cols);
-    for (auto i=0; i<lhs._rows; i++) {
-        for (auto j=0; j<lhs._cols; j++) {
+    for (size_t i=0; i<lhs._rows; i++) {
+        for (size_t j=0; j<lhs._cols; j++) {
             R(i,j) = lhs(i,j) - rhs(i,j);
         }
     }
@@ -121,9 +121,9 @@ const Matrix operator*(const Matrix& lhs, const Matrix& rhs)
     
     Matrix R(lhs._rows, rhs._cols);
 
-    for (auto i=0; i<lhs._rows; i++) {
-        for (auto j=0; j<rhs._cols; j++) {
-            for (auto k=0; k<lhs._cols; k++)
+    for (size_t i=0; i<lhs._rows; i++) {
+        for (size_t j=0; j<rhs._cols; j++) {
+            for (size_t k=0; k<lhs._cols; k++)
             {
                 R(i,j)+=lhs(i,k) * rhs(k,j);
             }
@@ -135,8 +135,8 @@ const Matrix operator*(const Matrix& lhs, const Matrix& rhs)
 const Matrix operator*(const Matrix& lhs, const double scalar)
 {
     Matrix R(lhs._rows, lhs._cols);
-    for (auto i=0; i<lhs._rows; i++) {
-        for (auto j=0; j<lhs._cols; j++) {
+    for (size_t i=0; i<lhs._rows; i++) {
+        for (size_t j=0; j<lhs._cols; j++) {
             R(i,j) = lhs(i,j) * scalar;
         }
     }
@@ -184,8 +184,8 @@ Matrix Matrix::Transpose() const
 {
     Matrix T(_cols, _rows);
     
-    for (auto i=0; i<_cols; i++) {
-        for (auto j=0; j<_rows; j++) {
+    for (size_t i=0; i<_cols; i++) {
+        for (size_t j=0; j<_rows; j++) {
             T(i,j) = (*this)(j,i);
         }
     }
@@ -204,9 +204,9 @@ Matrix Matrix::removeRowCol(size_t row, size_t col) const
 
     if ((row>_rows) || (col>_cols)) { throw out_of_range(""); }
     Matrix R(_rows-1, _cols-1);
-    for (auto i = 0; i<_rows; i++) {
+    for (size_t i = 0; i<_rows; i++) {
         if (i==row) { continue;}
-        for (auto j = 0; j<_cols; j++) {
+        for (size_t j = 0; j<_cols; j++) {
             if (j==col) { continue;}
             if (i<=row) {k=i;} else {k=i-1;}
             if (j<=col) {n=j;} else {n=j-1;}
@@ -223,13 +223,13 @@ Matrix Matrix::AugmentR(const Matrix &M) const
     // with the max of the rows
     // and the sum of the columns
     Matrix R(max(_rows,M._rows),_cols+M._cols);
-    for (auto i=0; i<_rows; i++) {
-        for (auto j=0; j<_cols; j++) {
+    for (size_t i=0; i<_rows; i++) {
+        for (size_t j=0; j<_cols; j++) {
             R(i,j) = (*this)(i,j);
         }
     }
-    for (auto i=0; i<M._rows; i++) {
-        for (auto j=0; j<M._cols; j++) {
+    for (size_t i=0; i<M._rows; i++) {
+        for (size_t j=0; j<M._cols; j++) {
             R(i,j+_cols) = M(i,j);
         }
     }
@@ -260,8 +260,8 @@ Matrix Matrix::Extract(size_t top_r, size_t top_c, size_t bot_r, size_t bot_c) c
 {
     if ((bot_r>_rows) || (bot_c>_cols)) { throw out_of_range(""); }
     Matrix R(bot_r - top_r+1,bot_c - top_c+1);
-    for (auto i = top_r; i<=bot_r; i++) {
-        for (auto j = top_c; j<=bot_c; j++) {
+    for (size_t i = top_r; i<=bot_r; i++) {
+        for (size_t j = top_c; j<=bot_c; j++) {
             R(i-top_r,j-top_c) = (*this)(i,j);
         }
     }
@@ -278,14 +278,14 @@ double Matrix::Det() const
     auto K2 = (*this);
 
     try {
-        for (auto k=_rows-1; k>=1; k--) {
+        for (size_t k=_rows-1; k>=1; k--) {
             if (k<=_rows-2) {
                 K1 = K1.Extract(2,2,2+k-1,2+k-1); 
             }
             K2 = R;
 
-            for (auto i = 0; i<k; i++) { // rows
-                for (auto j = 0; j<k; j++) { // cols
+            for (size_t i = 0; i<k; i++) { // rows
+                for (size_t j = 0; j<k; j++) { // cols
                     R(i,j) = R(i,j)*R(i+1,j+1) - R(i+1,j)*R(i,j+1);
                 }
             }
@@ -295,8 +295,8 @@ double Matrix::Det() const
             if (k<=_rows-2) {
                 // do the necessary divisions
                 // get the divison matrix, it's k x k
-                for (auto s=0; s<k; s++) {
-                    for (auto t=0; t<k; t++) {
+                for (size_t s=0; s<k; s++) {
+                    for (size_t t=0; t<k; t++) {
                         R(s,t)/=K1(s,t);
                     }
                 }    
@@ -322,7 +322,7 @@ double Matrix::DetSlow() const
         det = (*this)(0,0)*(*this)(1,1) - (*this)(0,1)*(*this)(1,0);
     }
     else {
-        for (auto i=0; i<_cols; i++) {
+        for (size_t i=0; i<_cols; i++) {
             det=det+(0,i)*adder*(removeRowCol(0,i).DetSlow());
             adder*=-1;
         }
@@ -335,7 +335,7 @@ double Matrix::Trace() const
 {
     if (_rows!=_cols) {throw logic_error("Matrix must be square");}
     auto sum = 0.0;
-    for (auto i = 0; i<_rows; i++) {
+    for (size_t i = 0; i<_rows; i++) {
         sum+=(*this)(i,i);
     }
     return sum;
@@ -344,7 +344,7 @@ double Matrix::Trace() const
 double Matrix::l2Norm(size_t col) const
 {
     auto sum = 0.0;
-    for (int i=0; i<_rows; ++i)
+    for (size_t i=0; i<_rows; ++i)
     {
         sum += (*this)(i,col) * (*this)(i,col);
     }
@@ -363,8 +363,8 @@ double Matrix::infinityNorm(size_t col) const
 
 void Matrix::Fill(double d)
 {
-    for (auto i=0; i<_rows; i++) {
-        for (auto j=0; j<_cols; j++) {
+    for (size_t i=0; i<_rows; i++) {
+        for (size_t j=0; j<_cols; j++) {
             (*this)(i,j) = d;
         }
     }
@@ -435,11 +435,11 @@ Matrix Matrix::Cholesky() const
     // uses the lower half of the matrix to produce L, s.t L*L^T = original matrix
     try {
         auto A = (*this);
-        for (auto i=0; i<_rows; i++) {
+        for (size_t i=0; i<_rows; i++) {
             auto s=0.0;
-            for (auto j=0; j<=i-1; j++) {
+            for (size_t j=0; j<=i-1; j++) {
                 double tm=0;
-                for (auto k=0; k<=j-1; k++) {tm+=A(i,k)*A(j,k);}
+                for (size_t k=0; k<=j-1; k++) {tm+=A(i,k)*A(j,k);}
                 auto t = A(i,j)-tm;
                 t /= A(j,j);
                 A(i,j) = t;
@@ -450,8 +450,8 @@ Matrix Matrix::Cholesky() const
         }
         // erase those above diagonal
         
-        for (auto i=0; i<_rows; i++) {
-            for (auto j=0; j<_rows; j++) {
+        for (size_t i=0; i<_rows; i++) {
+            for (size_t j=0; j<_rows; j++) {
                 if (i<j) {A(i,j)=0;}
             }
         }
@@ -466,10 +466,10 @@ Matrix Matrix::Cholesky() const
 Matrix Matrix::LSolve(const Matrix& b) const
 {
     Matrix x(_rows,1);
-    for (auto i=0; i<_rows; i++)
+    for (size_t i=0; i<_rows; i++)
     {
         auto g=0.0;
-        for (auto j=0; j<i; j++) { g+=(*this)(i,j)*x(j,0); }
+        for (size_t j=0; j<i; j++) { g+=(*this)(i,j)*x(j,0); }
         x(i,0) = (b(i,0)-g) / (*this)(i,i);
     }
     return x;
@@ -480,10 +480,10 @@ Matrix Matrix::USolve(const Matrix &b) const
     Matrix x(_rows,1);
     // warning: i = 0, then i-- -> (big int) as i is unsigned long long
     // so we work with index+1 instead.
-    for (auto i=_rows; i>0; i--) 
+    for (size_t i=_rows; i>0; i--) 
     {
         auto g=0.0;
-        for (auto j=i-1; j<_rows; j++) { 
+        for (size_t j=i-1; j<_rows; j++) { 
             g+=(*this)(i-1,j)*x(j,0); 
         }
         x(i-1,0) = (b(i-1,0)-g) / (*this)(i-1,i-1);
@@ -498,10 +498,10 @@ Matrix Matrix::Solve(const Matrix& b, const double omega) const
     auto conv = tol * 2;
     while (conv >= tol)
     {
-        for (auto i = 0; i<_rows; i++)
+        for (size_t i = 0; i<_rows; i++)
         {
             auto sigma = 0.0;
-            for (auto j = 0; j<_cols; j++)
+            for (size_t j = 0; j<_cols; j++)
             {
                 if (j != i) {
                     sigma += (*this)(i,j)*phi(j,0);
@@ -526,7 +526,7 @@ Matrix Matrix::TriSolve(const Matrix& d) const
     x(0,0) = m(0,1) / m(0,0);
     x(0,1) = d(0,0) / m(0,0);
 
-    for (auto i = 1; i<=n-1; i++)
+    for (size_t i = 1; i<=n-1; i++)
     {
         auto q = m(i,i) - m(i,i-1) * x(i-1,0);
         auto w = (i == n-1) ? 0 : m(i,i+1) / q;
@@ -537,10 +537,10 @@ Matrix Matrix::TriSolve(const Matrix& d) const
 
     x(n-1,0) = x(n-1,1);
 
-    for (auto i = n-1; i-- > 0;)
+    for (size_t i = n-1; i-- > 0;)
     {
-        auto k = x(i,1);
-        auto j = x(i,0);
+        size_t k = x(i,1);
+        size_t j = x(i,0);
         auto h = x(i+1,0);
         x(i,0) = k - j * h; // x(i,1)-x(i,0)*x(i+1,0);
     }
@@ -552,7 +552,7 @@ Matrix Matrix::TriSolve(const Matrix& d) const
 void Matrix::initialize(size_t rows, size_t cols)
 {
     _M = new double* [rows];
-    for (auto i=0; i<rows; i++) {
+    for (size_t i=0; i<rows; i++) {
         _M[i] = new double [cols];
     }
 
@@ -566,12 +566,12 @@ void Matrix::copyHelper(const Matrix& src)
     _cols = src._cols;
 
     _M = new double* [_rows];
-    for (auto i=0; i<_rows; i++) {
+    for (size_t i=0; i<_rows; i++) {
         _M[i] = new double [_cols];
     }
 
-    for (auto i=0; i<_rows; i++) {
-        for (auto j=0; j<_cols; j++) {
+    for (size_t i=0; i<_rows; i++) {
+        for (size_t j=0; j<_cols; j++) {
             (*this)(i,j) = src(i,j);
         }
     }
@@ -579,7 +579,7 @@ void Matrix::copyHelper(const Matrix& src)
 
 void Matrix::deleteHelper()
 {
-    for (auto i=0; i<_rows; i++) {
+    for (size_t i=0; i<_rows; i++) {
         delete[] _M[i];
     }
     delete[] _M;

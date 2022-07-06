@@ -60,7 +60,7 @@ namespace Common {
 
         vector<double> result(x.size());
 
-        for (auto i = 0; i<x.size(); i++)
+        for (size_t i = 0; i<x.size(); i++)
         {
             auto y = x;
             y[i] += h;
@@ -129,7 +129,7 @@ namespace Common {
                     throw "Line search for optimal step size failed (alpha too small)";
                 }
 
-                for (auto i = 0; i<factors; i++) { xk1[i] = xk[i] + sk(i,0); }
+                for (size_t i = 0; i<factors; i++) { xk1[i] = xk[i] + sk(i,0); }
                 f_xk1 = objective(xk1);
 
                 grad_f_xk1 = Matrix::FromVector(grad(objective, xk1, f_xk1));

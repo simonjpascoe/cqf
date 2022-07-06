@@ -5,16 +5,16 @@ using namespace std;
 
 namespace Enums {
 
-enum InstrumentType {
-    ZeroCouponBond,
-    Cap,
-    VanillaOption
+    enum class InstrumentType {
+        ZeroCouponBond,
+        Cap,
+        VanillaOption
 };
 
 inline InstrumentType EnumerateInstrument(string name) {
-    if (name == "ZeroCouponBond") { return ZeroCouponBond; }
-    if (name == "Cap") { return Cap; }
-    if (name == "VanillaOption") { return VanillaOption; }
+    if (name == "ZeroCouponBond") { return InstrumentType::ZeroCouponBond; }
+    if (name == "Cap") { return InstrumentType::Cap; }
+    if (name == "VanillaOption") { return InstrumentType::VanillaOption; }
     
     throw exception("Unsupported instrument type");
 }

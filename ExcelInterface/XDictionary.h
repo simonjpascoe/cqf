@@ -17,7 +17,7 @@ class XDictionary
 public:
     virtual ~XDictionary()
     {
-        m_cache.empty();
+        m_cache.clear();
     }
 
     const CellMatrix& LookupAsMatrix(string identity) const

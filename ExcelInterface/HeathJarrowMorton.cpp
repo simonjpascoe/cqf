@@ -50,9 +50,9 @@ extern "C" {
         auto rows = calibrationResult.AnalysisResult.Eigenvectors[0].Rows();
         auto cols = calibrationResult.AnalysisResult.Eigenvectors.size();
         Matrix M(rows,cols);
-        for (int i=0; i<rows; i++)
+        for (size_t i=0; i<rows; i++)
         {
-            for (int j=0; j<cols; j++)
+            for (size_t j=0; j<cols; j++)
             {
                 M(i,j) = calibrationResult.AnalysisResult.Eigenvectors[j](i,0);
             }

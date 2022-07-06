@@ -23,9 +23,9 @@ CalibrationResult HeathJarrowMortonPricer::CalibrateFactors(
 
     // 1. calculate differences matrix on the series data
     Matrix differences(timeSeriesData.Rows()-1, timeSeriesData.Cols());
-    for (int c = 0; c<timeSeriesData.Cols(); ++c) {
+    for (size_t c = 0; c<timeSeriesData.Cols(); ++c) {
         double columnSum = 0;
-        for (int r = 0; r<timeSeriesData.Rows()-1; ++r) {
+        for (size_t r = 0; r<timeSeriesData.Rows()-1; ++r) {
             differences(r,c) = timeSeriesData(r+1,c) - timeSeriesData(r,c);
         }
     }
@@ -36,10 +36,10 @@ CalibrationResult HeathJarrowMortonPricer::CalibrateFactors(
     // then do the covar calc on rows rather than columns for same result
     auto differencesT = differences.Transpose();
     Matrix covariance(differencesT.Rows(),differencesT.Rows());
-    for (int i = 0; i<differencesT.Rows(); ++i)
+    for (size_t i = 0; i<differencesT.Rows(); ++i)
     {
         auto primary = differencesT.Row(i);
-        for (int j = 0; j<differencesT.Rows(); ++j)
+        for (size_t j = 0; j<differencesT.Rows(); ++j)
         {
             if (i<=j) {
                 auto secondary = differencesT.Row(j);
@@ -59,7 +59,7 @@ CalibrationResult HeathJarrowMortonPricer::CalibrateFactors(
     auto project = createBasisFunctions(1,1,1,1);
 
     Matrix projections(maturities.Rows(),4);
-    for (int i = 0; i < maturities.Rows(); i++)
+    for (size_t i = 0; i < maturities.Rows(); i++)
     {
         auto p = project(maturities(i,0));
         projections(i,0) = p[0];
@@ -70,7 +70,7 @@ CalibrationResult HeathJarrowMortonPricer::CalibrateFactors(
     
     // 4a. Fit the curves, return the basis function coefficients
     Matrix parameters(4,pca.Eigenvectors.size());
-    for (int i=0; i<pca.Eigenvectors.size(); i++)
+    for (size_t i=0; i<pca.Eigenvectors.size(); i++)
     {
         // (reuse memory)
         pca.Eigenvectors[i] = pca.Eigenvectors[i] * sqrt(pca.Eigenvalues[i]);
@@ -98,7 +98,7 @@ PricingResult HeathJarrowMortonPricer::Simulate(
 {
     // build the volatility functions
     vector<function<double(double)>> vol;
-    for (int i=0; i<coefficients.Cols(); i++) {
+    for (size_t i=0; i<coefficients.Cols(); i++) {
         // fast(er) but fixes the functional form to up to quartic level only.
         auto volf = [i,&coefficients] (double x)
             {
@@ -127,7 +127,7 @@ PricingResult HeathJarrowMortonPricer::Simulate(
     auto dF = [&vol,dt] (double m_tau, double tau, const vector<double>& dX) 
         {
             double volsum = 0;
-            for (int i =0; i<vol.size(); i++) { 
+            for (size_t i =0; i<vol.size(); i++) {
                 volsum+= vol[i](tau)*dX[i];
             }
             return m_tau*dt +volsum * sqrt(dt);
@@ -146,7 +146,7 @@ PricingResult HeathJarrowMortonPricer::Simulate(
     // 2. cache the m(tau) function values as they remain the same for each maturity, rather than keep calculating them
     if (tenors.Cols() != seeds.Cols()) { throw "Tenors and Seed should have the same number of columns"; }
     vector<double> mcache;
-    for (auto i=0; i<seeds.Cols(); i++) { 
+    for (size_t i=0; i<seeds.Cols(); i++) {
         simulation(0,i) = seeds(0,i); 
         mcache.push_back(m(tenors(0,i)));
     }
@@ -176,13 +176,13 @@ PricingResult HeathJarrowMortonPricer::Simulate(
         {
             // 3. evolve and price one simulation
             auto sobolGen = sobolGens[sim-1];
-            for (auto i=1; i<=resolution; i++) {
+            for (size_t i=1; i<=resolution; i++) {
                 // 3a. draw 'random' deviates, uncorrelated
                 vector<double> dX;
                 for (auto u: sobolGen.Draw()) { dX.push_back(InverseStandardCumulativeNormal(u));}
 
                 // 3b. most maturities fowards diff for dFbar/dtau
-                for (auto j=0; j<simulation.Cols()-1; j++)
+                for (size_t j=0; j<simulation.Cols()-1; j++)
                 {
                     simulation(i,j) = simulation(i-1,j) + dF(mcache[j],tenors(0,j),dX) + (simulation(i-1,j+1)- simulation(i-1,j))/(tenors(0,j+1)-tenors(0,j)) * dt;
                 }
@@ -192,7 +192,7 @@ PricingResult HeathJarrowMortonPricer::Simulate(
             }
 
             // 4. update product prices
-            for (auto k=0; k<products.size(); k++) {
+            for (size_t k=0; k<products.size(); k++) {
                 fairvalues(k,sim) = products[k]->HeathJarrowMortonEvaluate(dt, simulation, tenors);
             }
         };
@@ -203,7 +203,7 @@ PricingResult HeathJarrowMortonPricer::Simulate(
     // construct simulation convergence matrix
     for (auto sim = 1; sim<simulationCount+1; sim++)
     {
-        for (auto k=0; k<products.size(); k++) {
+        for (size_t k=0; k<products.size(); k++) {
             finals(k,0) = ((sim-1) * finals(k,0) + fairvalues(k,sim))/sim;
             auto n = (long)floor(sqrt(sim));
             if (sqrt(sim) == n) { // i.e. sim = n*n for some n 
@@ -214,7 +214,7 @@ PricingResult HeathJarrowMortonPricer::Simulate(
     }
 
     // 5. complete convergence result by the copying of the results to final column of matrix
-    for (auto k=0; k<products.size(); k++) {
+    for (size_t k=0; k<products.size(); k++) {
         convergence(k+1,columns-1) = finals(k,0);
     }
     convergence(0,columns-1)=simulationCount;
@@ -236,7 +236,7 @@ double HeathJarrowMortonPricer::calculateCovariance(const Matrix& primary, const
     double sAverage = average(secondary);
     double covariance = 0;
 
-    for (int i=0; i<primary.Cols(); ++i)
+    for (size_t i=0; i<primary.Cols(); ++i)
     {
         covariance += (primary(0,i) - pAverage) * (secondary(0,i) - sAverage);
     }
@@ -249,7 +249,7 @@ double HeathJarrowMortonPricer::average(const Matrix& vector) const
     if (vector.Rows() != 1) {throw "Provided vector is not a row vector";}
 
     double sum = 0;
-    for (int i=0; i<vector.Cols(); ++i)
+    for (size_t i=0; i<vector.Cols(); ++i)
     {
         sum+=vector(0,i);
     }

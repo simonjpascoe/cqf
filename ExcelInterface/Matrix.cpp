@@ -19,9 +19,9 @@ extern "C" {
         XlfOper xSource(source);
         auto src(xSource.AsMatrix("source"));
         Matrix inter(src.size1(), src.size2());
-        for (int i = 0; i<src.size1(); i++)
+        for (size_t i = 0; i<src.size1(); i++)
         {
-            for (int j =0; j<src.size2(); j++)
+            for (size_t j =0; j<src.size2(); j++)
             {
                 inter(i,j) = src(i,j);
             }
@@ -66,9 +66,9 @@ extern "C" {
         XlfOper xSource(source);
         auto inter = ObjectCache<Matrix>::Instance().Lookup(xSource.AsString());
         MyMatrix dest(inter.Rows(), inter.Cols());
-        for (int i = 0; i<dest.size1(); i++)
+        for (size_t i = 0; i<dest.size1(); i++)
         {
-            for (int j =0; j<dest.size2(); j++)
+            for (size_t j =0; j<dest.size2(); j++)
             {
                 dest(i,j) = inter(i,j);
             }

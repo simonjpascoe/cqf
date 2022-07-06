@@ -17,7 +17,7 @@ double Cap::HeathJarrowMortonEvaluate(double dt, const Matrix& simulation, const
     }
 
     double value = 0;
-    for (auto i=0; i<finalRow; i++)
+    for (size_t i=0; i<finalRow; i++)
     {
         auto caplet = calculateCaplet(i, simulation, tenors) * dt;
         ZeroCouponBond zcb(i*dt);
@@ -31,7 +31,7 @@ double Cap::calculateCaplet(size_t ti, const Matrix& simulation, const Matrix& t
 {
     // 1. Calculate forward libor at time represented by row ti using simple integration
     auto libor = 0.0;
-    for (auto i = 0; i< tenors.Cols()-1; i++)
+    for (size_t i = 0; i< tenors.Cols()-1; i++)
     {
         libor += (tenors(0,i+1) - tenors(0,i)) * (simulation(ti,i+1) + simulation(ti,i));
     }
